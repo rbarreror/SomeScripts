@@ -58,6 +58,9 @@ class CombinedTable():
         # Array with new count of input table
         countsTableNew = np.array([], dtype="float64")
 
+        countsTableNew = np.interp(self.tableDict['midpoint'], midpointsTable, countsTable)
+
+        """
         for Ni, mid in enumerate(self.tableDict['midpoint']):
 
             # if midpoint in combined table is lower than the lowest of input table, write 0
@@ -91,7 +94,7 @@ class CombinedTable():
                     continue
 
                 countsTableNew = np.append(countsTableNew, interpol(x1,x3,m1,mid,m3))
-        
+        """
         self.tableDict[f"count_{index}"] = np.round(countsTableNew, 5)
 
     def writeTable(self):
@@ -132,7 +135,7 @@ def main():
 
     # Generate first column containing midpoint
     combinedTable.buildMidPoint(tableObject)
-
+    
     # Add columns
     [combinedTable.addCount(table.table, os.path.basename(os.path.splitext(fileList[i])[0])) for i, table in enumerate(tableObject)]
 
